@@ -8,6 +8,7 @@
     ];
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nixpkgs.config.allowUnfree = true;
   
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
@@ -30,20 +31,30 @@
     programs.zsh.enable = true; 
       
     environment.systemPackages = with pkgs; [
+      #TUI
       neovim
       vim 
+      bat
+      yazi
+      btop
+      opencode
+      ffmpeg
+      #GUI
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      ghostty
+      anytype
+      gimp
+      vlc
+      keymapp
+      obs-studio
+      spotify
+      steam
+      telegram-desktop
+      zed-editor
+      #REQ
       mako
       wget
-      swaybg
-      swayimg
-      swaylock
-      swayidle
-      sway-audio-idle-inhibit
       git
-      waybar
-      ghostty
-      fuzzel
       font-awesome
       xwayland-satellite
       xwayland
