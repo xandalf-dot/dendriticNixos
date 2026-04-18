@@ -52,7 +52,9 @@
       telegram-desktop
       zed-editor
       #REQ
+      azure-cli
       mako
+      ripgrep
       wget
       git
       font-awesome
