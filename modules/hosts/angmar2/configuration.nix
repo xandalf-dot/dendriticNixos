@@ -7,33 +7,35 @@
       self.nixosModules.niri
     ];
 
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     nixpkgs.config.allowUnfree = true;
-  
+
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
-    networking.hostName = "angmar2"; 
+    networking.hostName = "angmar2";
     networking.networkmanager.enable = true;
-      
+
     time.timeZone = "America/Chicago";
-      
+
     users.users.xander = {
       shell = pkgs.zsh;
-	isNormalUser = true;
-        extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-        packages = with pkgs; [
-          tree
-        ];
-    };
-      
-    programs.firefox.enable = true;
-    programs.zsh.enable = true; 
-      
-    environment.systemPackages = with pkgs; [
+      isNormalUser = true;
+      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+      packages = with pkgs; [
       #TUI
+	  tree
+	  zig
+	  zls
+	  fzf
       neovim
-      vim 
+	  zk
+	  nixd
+	  nixfmt
+      vim
       bat
       yazi
       btop
@@ -51,22 +53,32 @@
       steam
       telegram-desktop
       zed-editor
+	  discord
+      ];
+    };
+    home-manager.users.xander = self.homeModules.xanderModule;
+
+    programs.zsh.enable = true;
+
+    environment.systemPackages = with pkgs; [
       #REQ
+	  vim
       azure-cli
       mako
       ripgrep
       wget
       git
       font-awesome
+	  brightnessctl
       xwayland-satellite
       xwayland
       xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk
       gnome-keyring
     ];
-      
+
     environment.variables.EDITOR = "nvim";
-      
+
     services.upower.enable = true;
     services.tuned.enable = true;
     services.logind.settings.Login = {
@@ -76,11 +88,11 @@
     };
     services.thermald.enable = true;
     services.displayManager.ly.enable = true;
-    services.tailscale.enable = true; 
+    services.tailscale.enable = true;
     services.libinput.enable = true;
     services.printing.enable = true;
     services.fprintd.enable = true;
-    security.pam.services.swaylock = {};
+    security.pam.services.swaylock = { };
     security.pam.services.swaylock.fprintAuth = true;
     services.xserver = {
       enable = true;
@@ -91,17 +103,17 @@
       enable = true;
       pulse.enable = true;
     };
-      
-    fonts.packages = with pkgs; [ 
-      cantarell-fonts 
-      nerd-fonts.jetbrains-mono 
+
+    fonts.packages = with pkgs; [
+      cantarell-fonts
+      nerd-fonts.jetbrains-mono
     ];
-      
+
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
     };
-      
+
     system.stateVersion = "25.11";
   };
 }

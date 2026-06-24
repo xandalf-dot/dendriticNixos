@@ -18,7 +18,7 @@
   flake.homeModules.xanderModule = { pkgs, ... }: {
 	  programs.zsh = {
 		enable = true; 
-		shellALiases = {
+		shellAliases = {
 		  ll = "ls -l";
 		  btw = "echo nixos btw";
 		  update = "sudo nixos-rebuild switch --flake .#angmar2";
@@ -28,7 +28,7 @@
 		  theme = "cypher";
 		};
 		initContent = ''
-		  eval "$(tirith init --shel zsh)"
+		  eval "$(tirith init --shell zsh)"
 		'';
 	  };
 	  
