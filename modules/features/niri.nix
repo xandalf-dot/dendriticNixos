@@ -20,6 +20,8 @@
         settings = {
           spawn-at-startup = [
             (lib.getExe self'.packages.myNoctalia)
+			(lib.getExe pkgs.ghostty)
+			(lib.getExe inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default)
           ];
 
           hotkey-overlay.skip-at-startup = _: { };
@@ -103,10 +105,18 @@
           layout.focus-ring.width = 1;
 
 		  layout.tab-indicator.position = "bottom";
-		  layout.tab-indicator.gap = -1;
+		  layout.tab-indicator.gap = -3;
           animations.slowdown = 0.7;
 
-		  window-rule.open-maximized = true;
+		  window-rules = [
+			{
+			  matches = [
+				{ app-id = "zen"; }
+			  ];
+			  open-on-workspace = "b";
+			  open-maximized = true;
+			}
+		  ];
 
           binds = {
             "Mod+T".spawn-sh = lib.getExe pkgs.ghostty;
@@ -131,8 +141,6 @@
 			"Mod+Minus".set-column-width = "-10";
 			"Mod+Equal".set-column-width = "+10";
 			
-			"Mod+Escape".toggle-keyboard-shorcuts-inhibit = _: {};
-
             "Mod+H".focus-column-or-monitor-left = _: { };
             "Mod+L".focus-column-or-monitor-right = _: { };
             "Mod+K".focus-window-or-monitor-up = _: { };
@@ -143,52 +151,55 @@
             "Mod+Shift+K".move-window-up = _: { };
             "Mod+Shift+J".move-window-down = _: { };
 
-            "Mod+Shift+Ctrl+H".move-column-to-monitor-left = _: { };
-            "Mod+Shift+Ctrl+L".move-column-to-monitor-right = _: { };
-            "Mod+Shift+Ctrl+K".move-column-to-monitor-up = _: { };
-            "Mod+Shift+Ctrl+J".move-column-to-monitor-down = _: { };
+            "Mod+Shift+Ctrl+H".move-workspace-to-monitor-left = _: { };
+            "Mod+Shift+Ctrl+L".move-workspace-to-monitor-right = _: { };
+            "Mod+Shift+Ctrl+K".move-workspace-to-monitor-up = _: { };
+            "Mod+Shift+Ctrl+J".move-workspace-to-monitor-down = _: { };
 
-            "Mod+1".focus-workspace = "w0";
-            "Mod+2".focus-workspace = "w1";
-            "Mod+3".focus-workspace = "w2";
-            "Mod+4".focus-workspace = "w3";
-            "Mod+5".focus-workspace = "w4";
-            "Mod+6".focus-workspace = "w5";
-            "Mod+7".focus-workspace = "w6";
-            "Mod+8".focus-workspace = "w7";
-            "Mod+9".focus-workspace = "w8";
-            "Mod+0".focus-workspace = "w9";
-            "Mod+Ctrl+1".move-column-to-workspace = "w0";
-            "Mod+Ctrl+2".move-column-to-workspace = "w1";
-            "Mod+Ctrl+3".move-column-to-workspace = "w2";
-            "Mod+Ctrl+4".move-column-to-workspace = "w3";
-            "Mod+Ctrl+5".move-column-to-workspace = "w4";
-            "Mod+Ctrl+6".move-column-to-workspace = "w5";
-            "Mod+Ctrl+7".move-column-to-workspace = "w6";
-            "Mod+Ctrl+8".move-column-to-workspace = "w7";
-            "Mod+Ctrl+9".move-column-to-workspace = "w8";
-            "Mod+Ctrl+0".move-column-to-workspace = "w9";
+            "Mod+1".focus-workspace = "1";
+			"Mod+B".focus-workspace = "B";
+            "Mod+2".focus-workspace = "2";
+            "Mod+3".focus-workspace = "3";
+            "Mod+4".focus-workspace = "4";
+            "Mod+5".focus-workspace = "5";
+            "Mod+6".focus-workspace = "6";
+            "Mod+7".focus-workspace = "7";
+            "Mod+8".focus-workspace = "8";
+            "Mod+9".focus-workspace = "9";
+            "Mod+0".focus-workspace = "0";
+            "Mod+Ctrl+1".move-column-to-workspace = "1";
+			"Mod+Ctrl+B".move-column-to-workspace = "B";
+            "Mod+Ctrl+2".move-column-to-workspace = "2";
+            "Mod+Ctrl+3".move-column-to-workspace = "3";
+            "Mod+Ctrl+4".move-column-to-workspace = "4";
+            "Mod+Ctrl+5".move-column-to-workspace = "5";
+            "Mod+Ctrl+6".move-column-to-workspace = "6";
+            "Mod+Ctrl+7".move-column-to-workspace = "7";
+            "Mod+Ctrl+8".move-column-to-workspace = "8";
+            "Mod+Ctrl+9".move-column-to-workspace = "9";
+            "Mod+Ctrl+0".move-column-to-workspace = "0";
 
             "XF86AudioRaiseVolume".spawn-sh = "wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+";
             "XF86AudioLowerVolume".spawn-sh = "wpctl set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-";
             "XF86AudioMute".spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
             "XF86AudioMicMute".spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-			"XF86MonBrightnessDown".spawn-sh = "brightnessctl --class=backlight set -10";
-			"XF86MonBrightnessUp".spawn-sh = "brightnessctl --class=backlight set +10"; 
+			"XF86MonBrightnessDown".spawn-sh = "brightnessctl --class=backlight set 10%-";
+			"XF86MonBrightnessUp".spawn-sh = "brightnessctl --class=backlight set +10%"; 
           };
 
           workspaces =
             {
-              "w0" = _: {};
-              "w1" = _: {};
-              "w2" = _: {};
-              "w3" = _: {};
-              "w4" = _: {};
-              "w5" = _: {};
-              "w6" = _: {};
-              "w7" = _: {};
-              "w8" = _: {};
-              "w9".open-on-output = "DP-1";
+              "1" = _: {};
+              "B" = _: {};
+              "2" = _: {};
+              "3" = _: {};
+              "4" = _: {};
+              "5" = _: {};
+              "6" = _: {};
+              "7" = _: {};
+              "8" = _: {};
+              "9" = _: {};
+              "0".open-on-output = "DP-5";
             };
         };
       };

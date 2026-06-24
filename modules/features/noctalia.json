@@ -77,7 +77,7 @@
             "hideUnoccupied": true,
             "iconScale": 0.8,
             "id": "Workspace",
-            "labelMode": "index",
+            "labelMode": "name",
             "occupiedColor": "secondary",
             "pillSize": 0.6,
             "showApplications": false,
