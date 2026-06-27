@@ -113,13 +113,12 @@
       enable = true;
       powerOnBoot = true;
     };
-	fileSystems."/mnt/shares/" = {
-	  device = "//100.125.11.72/srv/shares/";
+	fileSystems."/mnt/share" = {
+	  device = "//100.125.11.72/srv/shares";
 	  fsType = "cifs";
 	  options = let
 		automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-	  in ["${automount_opts},credentials=/etc/nixos/smb-secrets,uid=1000,guid=100"];
-
+	  in ["${automount_opts},credentials=/home/xander/nixos2/smb-secrets,uid=1000,guid=100"];
 	};
 
     system.stateVersion = "25.11";
