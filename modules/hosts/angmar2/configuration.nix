@@ -24,36 +24,35 @@
     users.users.xander = {
       shell = pkgs.zsh;
       isNormalUser = true;
-      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+      extraGroups = [ "wheel" ]; 
       packages = with pkgs; [
-      #TUI
-	  tree
-	  zig
-	  zls
-	  fzf
-      neovim
-	  zk
-	  nixd
-	  nixfmt
-      vim
-      bat
-      yazi
-      btop
-      opencode
-      ffmpeg
-      #GUI
-      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-      ghostty
-      anytype
-      gimp
-      vlc
-      keymapp
-      obs-studio
-      spotify
-      steam
-      telegram-desktop
-      zed-editor
-	  discord
+        #TUI
+        tree
+        zig
+        zls
+        fzf
+        neovim
+        zk
+        nixd
+        nixfmt
+        vim
+        bat
+        yazi
+        btop
+        opencode
+        ffmpeg
+        #GUI
+        inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+        ghostty
+        anytype
+        gimp
+        vlc
+        keymapp
+        obs-studio
+        steam
+        telegram-desktop
+        zed-editor
+        discord
       ];
     };
     home-manager.users.xander = self.homeModules.xanderModule;
@@ -62,14 +61,15 @@
 
     environment.systemPackages = with pkgs; [
       #REQ
-	  vim
+      vim
       azure-cli
+	  cifs-utils
       mako
       ripgrep
       wget
       git
       font-awesome
-	  brightnessctl
+      brightnessctl
       xwayland-satellite
       xwayland
       xdg-desktop-portal-wlr
@@ -113,6 +113,14 @@
       enable = true;
       powerOnBoot = true;
     };
+	fileSystems."/mnt/shares/" = {
+	  device = "//100.125.11.72/srv/shares/";
+	  fsType = "cifs";
+	  options = let
+		automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+	  in ["${automount_opts},credentials=/etc/nixos/smb-secrets,uid=1000,guid=100"];
+
+	};
 
     system.stateVersion = "25.11";
   };
