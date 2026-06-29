@@ -32,6 +32,8 @@
         zls
         fzf
         neovim
+		cifs-utils
+		samba
         zk
         nixd
         nixfmt
@@ -64,6 +66,7 @@
       vim
       azure-cli
 	  cifs-utils
+	  sshfs-fuse
       mako
       ripgrep
       wget
@@ -113,12 +116,11 @@
       enable = true;
       powerOnBoot = true;
     };
+
 	fileSystems."/mnt/share" = {
-	  device = "//100.125.11.72/srv/shares";
+	  device = "//192.168.1.66/shares";
 	  fsType = "cifs";
-	  options = let
-		automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-	  in ["${automount_opts},credentials=/home/xander/nixos2/smb-secrets,uid=1000,guid=100"];
+	  options = [ "x-systemd.automount,credentials=/home/xander/nixos2/smb-secrets,uid=1000,gid=100" ];
 	};
 
     system.stateVersion = "25.11";
